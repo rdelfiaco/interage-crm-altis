@@ -35,7 +35,8 @@
   
               <!-- Simple link -->
               <mdb-accordion-item class="no-collase">
-                <mdb-accordion-item-head mdbWavesEffect><mdb-icon far icon="hand-pointer"></mdb-icon> Simple link
+                <mdb-accordion-item-head mdbWavesEffect  (click)="openPage('teste', $event);" >
+                  <mdb-icon far icon="hand-pointer"></mdb-icon> Simple link
                 </mdb-accordion-item-head>
                 <mdb-accordion-item-body></mdb-accordion-item-body>
               </mdb-accordion-item>
@@ -54,7 +55,8 @@
   
               <!-- Simple link -->
               <mdb-accordion-item class="no-collase">
-                <mdb-accordion-item-head mdbWavesEffect><mdb-icon far icon="gem"></mdb-icon> Simple link 2</mdb-accordion-item-head>
+                <mdb-accordion-item-head mdbWavesEffect (click)="openPage('semPermissao', $event);" >
+                  <mdb-icon far icon="gem"></mdb-icon> Simple link 2</mdb-accordion-item-head>
                 <mdb-accordion-item-body></mdb-accordion-item-body>
               </mdb-accordion-item>
   
@@ -96,19 +98,20 @@
   
       <navlinks>
         <ul class="nav navbar-nav nav-flex-icons ml-auto ie-double-nav">
+
           <li class="nav-item">
-            <a class="nav-link waves-light " mdbWavesEffect>
-               <mdb-icon fas icon="bell"  ></mdb-icon> 
-               <!-- <div *ngIf="counterEvents" class="counterEvents">
-                <span>{{counterEvents}}</span>
-              </div> -->
-              </a>
+            <a class="nav-link waves-light " mdbWavesEffect >
+              <div> 
+               <i class="fa-bell fas"  > 
+                 <a *ngIf="counterEvents" >          
+                   <span class="clearfix d-none d-sm-inline-block counterEvents "  > {{counterEvents}} </span>
+                </a>
+              </i > 
+            </div>
+
+            </a>
           </li>
 
-          <!-- <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="user"></mdb-icon> <span
-              class="clearfix d-none d-sm-inline-block">Account</span></a>
-          </li> -->
           <li class="nav-item dropdown btn-group" dropdown> 
             <a dropdownToggle type="button" class="nav-link dropdown-toggle waves-light" mdbWavesEffect>
               <mdb-icon fas icon="user"></mdb-icon>
@@ -121,7 +124,7 @@
             </div>
           </li>
           <li class="nav-item">
-            <a class="nav-link waves-light" mdbWavesEffect><mdb-icon fas icon="sign-out-alt"></mdb-icon>
+            <a class="nav-link waves-light" mdbWavesEffect (click)="logout()" ><mdb-icon fas icon="sign-out-alt"></mdb-icon>
             <span class="clearfix d-none d-sm-inline-block">Sair</span></a>
           </li>
         </ul>
@@ -136,11 +139,11 @@
   <!--/.Double navigation-->
   
   <!-- Main Layout-->
-  <!-- <main>
+  <main class="main-container-content" >
       
-    <router-outlet> </router-outlet>
+    <router-outlet > </router-outlet>
 
-  </main> -->
+  </main>
   <!--/Main layout -->
 
 

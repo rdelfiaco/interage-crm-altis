@@ -1,4 +1,4 @@
-import { AuthService } from './components/pages/login/login.service';
+import { AuthService } from './shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
@@ -9,14 +9,23 @@ import { Observable } from 'rxjs';
 })
 export class AppComponent implements OnInit  {
 
-usuarioLogado: Observable<boolean>
+usuarioLogado: boolean
 
   constructor( private authService: AuthService ){
   }
 
  ngOnInit(){
+   debugger
     this.authService.usarioLogadoEmitter.subscribe(usuarioLogado => 
     { this.usuarioLogado = usuarioLogado})  
+    
+    if (this.authService.checkAutenticacao()) {
+      this.usuarioLogado = true 
+    }
+    
  }
+
+
+
 
 }

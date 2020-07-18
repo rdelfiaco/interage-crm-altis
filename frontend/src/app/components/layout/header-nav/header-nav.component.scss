@@ -8,21 +8,18 @@
 
 
 
-// a.bell {
-  
-//     & .counterEvents {
-//       background-color: red;
-//       border-radius: 3px;
-//       position: absolute;
-//       left: 12px;
-//       top: -8px;
-//       color: white;
-//       display: flex;
-//       align-items: center;
-//       justify-content: center;
-//       font-weight: 600;
-//       font-size: 15px;
-//       padding: 0.5px;
-//       text-align: center;
-//     }
-//   }
+.counterEvents {
+      background-color: red;
+      //border-radius: 3px;
+      //position: absolute;
+      margin-left: 3px;
+      //top: -8px;
+      color: white;
+      //display: flex;
+    //   align-items: center;
+    //   justify-content: center;
+      font-weight: 600;
+      font-size: 15px;
+      //padding: 0.5px;
+    //   text-align: center;
+    }

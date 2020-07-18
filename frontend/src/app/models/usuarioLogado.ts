@@ -1,4 +1,4 @@
-export class Usuario {
+export class UsuarioLogado {
     private _login: string;
     private _id_organograma: number;
     private _id: number;
@@ -12,7 +12,7 @@ export class Usuario {
     private _apelido: string;
     private _telefone: string;
     private _ddd: number;
-    private _possui_carteira_cli: boolean;
+    private _possui_carteira_cli: boolean; 
     private _nome: string;
     private _permissoes: Array<any>;
     private _tempo_sessao: number;

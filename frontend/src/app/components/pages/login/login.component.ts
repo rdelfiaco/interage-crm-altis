@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from './login.model';
+import { UsuarioLogado } from '../../../models/usuarioLogado';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from './login.service';
+import { AuthService } from '../../../shared/services/auth.service';
 import { ToastService } from 'ng-uikit-pro-standard';
 import  SHA1  from '../../../shared/services/sha1'
 
@@ -13,7 +13,7 @@ import  SHA1  from '../../../shared/services/sha1'
 })
 export class LoginComponent implements OnInit {
 
-  usuario: Usuario = new Usuario();
+  usuario: UsuarioLogado = new UsuarioLogado();
   loginForm: FormGroup;
 
   constructor(
@@ -29,10 +29,11 @@ export class LoginComponent implements OnInit {
   };
 
   ngOnInit() {
+    
   }
 
   async fazerLogin() {
-
+    debugger
     this.usuario.login = this.loginForm.value.login;
     this.usuario.senha = SHA1(this.loginForm.value.senha);
    

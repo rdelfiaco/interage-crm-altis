@@ -1,10 +1,11 @@
-import { Usuario } from './login.model';
+import { UsuarioLogado } from '../../models/usuarioLogado';
 
 import { Injectable, EventEmitter } from '@angular/core';
-import { ConnectHTTP } from '../../../shared/services/connectHTTP';
-import { LocalStorage } from '../../../shared/services/localStorage';
+import { ConnectHTTP } from './connectHTTP';
+import { LocalStorage } from './localStorage';
 import { Router } from '@angular/router';
 import { Observable, BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,7 @@ export class AuthService {
   }
 
   async initConfig() {
+    debugger
     // ler paramentros de configuração 
     let config = await this.connectHTTP.callService({
       service: 'getConfiguracao',
@@ -81,7 +83,8 @@ export class AuthService {
     return this.usarioLogadoEmitter
   }
 
-  async autenticacao(usuario: Usuario) {
+  async autenticacao(usuario: UsuarioLogado) {
+
     debugger
     try {
       const usuarioLogado = await this.connectHTTP.callService({
@@ -138,6 +141,7 @@ export class AuthService {
   }
 
   async logout() {
+    debugger
     let usuarioLogado = this.getUsuarioLogadoLocalStorage();
     if (usuarioLogado) {
       await this.connectHTTP.callService({
@@ -148,14 +152,13 @@ export class AuthService {
           id_usuario: usuarioLogado.id
         }
       })
-    //this.counterEvents.next(0);
     this.localStorage.delLocalStorage('usuarioLogado', 'object')
+    this.usarioLogadoEmitter.emit(false)
     }
-    this.router.navigate(['login']);
   }
 
   getUsuarioLogadoLocalStorage() {
-    return this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
+    return this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
   }
 
   _getTokenLogadoLocalStorage() {

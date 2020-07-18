@@ -1,5 +1,5 @@
+import { UsuarioLogado } from '../../models/usuarioLogado';
 
-import { Usuario } from "../../components/pages/login/login.model";
 import { LocalStorage } from "./localStorage";
 
 
@@ -8,7 +8,7 @@ export class CheckPermissaoRecurso{
 
     
     private localStorage: LocalStorage = new LocalStorage();
-    private usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
+    private usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
 
 
     usuarioLocadoAcessaRecurso(recurso){
