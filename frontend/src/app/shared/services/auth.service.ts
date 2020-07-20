@@ -37,15 +37,14 @@ export class AuthService {
   }
 
   async initConfig() {
-    debugger
     // ler paramentros de configuração 
-    let config = await this.connectHTTP.callService({
-      service: 'getConfiguracao',
-      paramsService: {
-        nomeConfiguracao: 'tempoDealertaDeEventos'
-      }
-    }) as any;
-    this.config = config.resposta[0].valor;
+    // let config = await this.connectHTTP.callService({
+    //   service: 'getConfiguracao',
+    //   paramsService: {
+    //     nomeConfiguracao: 'tempoDealertaDeEventos'
+    //   }
+    // }) as any;
+    // this.config = config.resposta[0].valor;
     this.config = 30000;
     if (this.usuarioLogadoObject ){
       this.ativaGetEventos(parseInt(this.config));
@@ -114,7 +113,9 @@ export class AuthService {
 
   checkAutenticacao() {
     debugger
-    return this._getDataExpiracao() && this._getDataExpiracao().getTime() > new Date().getTime() ;
+    if (this.usuarioLogadoObject ) {
+        return this._getDataExpiracao() && this._getDataExpiracao().getTime() > new Date().getTime() ;
+    }
   }
 
   validaAutenticacao() {
