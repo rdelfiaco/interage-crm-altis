@@ -1,4 +1,4 @@
-import { UsuarioLogado } from '../../../models/usuarioLogado';
+import { Usuario } from '../../../models/usuario';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
@@ -16,7 +16,7 @@ import { AuthService } from '../../../shared/services/auth.service';
 export class HeaderNavComponent implements OnInit {
 
   hasLogado: Observable<boolean>;
-  usuarioLogado: UsuarioLogado;
+  usuarioLogado: Usuario;
   nomeUsuario: string = 'Usuário';
   // TROCA DADOS SERVIDOR TROCAR NUMERO DA VERSÃO
   versaoSistema: string;
@@ -33,7 +33,7 @@ export class HeaderNavComponent implements OnInit {
     private localStorage: LocalStorage,
     private checkPermissaoRecurso: CheckPermissaoRecurso ) {
     this.hasLogado = this.auth.estaLogado();
-    this.usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
+    this.usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
     this.getCounterEvents();
     this.versaoSistema = 'T.2.1.22';
     this.versaoTeste = true; 
@@ -76,11 +76,13 @@ export class HeaderNavComponent implements OnInit {
 
 
   openPage(page: string, event: any) {
-    event.preventDefault();
-    event.stopPropagation();
-    setTimeout(_ => {
-      this.router.navigate([page]);
-    }, 100);
+    // event.preventDefault();
+    // event.stopPropagation();
+    // setTimeout(_ => {
+    //   this.router.navigate([page]);
+    // }, 100);
+
+    
   }
 
   abrirCadastroPessoa() {

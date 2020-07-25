@@ -1,4 +1,4 @@
-import { UsuarioLogado } from '../../models/usuarioLogado';
+import { Usuario } from '../../models/usuario';
 
 import { LocalStorage } from "./localStorage";
 import { ConnectHTTP } from "./connectHTTP"; 
@@ -7,7 +7,7 @@ import { ToastService } from 'ng-uikit-pro-standard';
 export class BancoDados
 {
   localStorage: LocalStorage = new LocalStorage();
-  usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
+  usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
   connectHTTP: ConnectHTTP = new ConnectHTTP;
   toastrService: ToastService;
 

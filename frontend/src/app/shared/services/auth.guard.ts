@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { LocalStorage } from './localStorage';
-import { UsuarioLogado } from '../../models/usuarioLogado';
+import { UsuarioLogado } from '../../models/usuario';
 
 @Injectable()
 export class AuthGuard implements CanActivate {

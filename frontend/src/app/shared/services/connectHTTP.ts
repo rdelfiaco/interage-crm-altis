@@ -1,4 +1,4 @@
-import { UsuarioLogado } from '../../models/usuarioLogado';
+import { Usuario } from '../../models/usuario';
 import { LocalStorage } from './localStorage';
 
 // var localSevidor = "http://88.99.35.190:3000/" //Producao
@@ -31,7 +31,7 @@ export class ConnectHTTP {
       const service = options.service
       let url = `${host}${service}`
       if (!options.naoExigeToken) {
-        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
+        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
         if (usuarioLogado != undefined ){
           options.paramsService = {
             ...options.paramsService,
@@ -86,7 +86,7 @@ export class ConnectHTTP {
       let url = `${host}${service}`
 
       if (!options.naoExigeToken) {
-        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
+        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
         if (usuarioLogado != undefined ){
           options.paramsService = {
             id_usuario: usuarioLogado.id.toString(),
@@ -139,7 +139,7 @@ export class ConnectHTTP {
       let url = `${host}${service}`
 
       if (!options.naoExigeToken) {
-        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
+        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
         if (usuarioLogado != undefined ){
           options.paramsService = {
             id_usuario: usuarioLogado.id.toString(),
@@ -203,7 +203,7 @@ export class ConnectHTTP {
       let url = `${host}${service}`
 
       if (!options.naoExigeToken) {
-        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
+        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
         if (usuarioLogado != undefined ){
           options.paramsService = {
             //...options.paramsService,
@@ -264,7 +264,7 @@ export class ConnectHTTP {
       let url = `${host}${service}`
 
       if (!options.naoExigeToken) {
-        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
+        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
         if (usuarioLogado != undefined ){
           options.paramsService = {
             //...options.paramsService,

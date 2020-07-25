@@ -1,4 +1,4 @@
-import { UsuarioLogado } from '../../models/usuarioLogado';
+import { Usuario } from '../../models/usuario';
 
 import { Injectable, EventEmitter } from '@angular/core';
 import { ConnectHTTP } from './connectHTTP';
@@ -82,9 +82,8 @@ export class AuthService {
     return this.usarioLogadoEmitter
   }
 
-  async autenticacao(usuario: UsuarioLogado) {
+  async autenticacao(usuario: Usuario) {
 
-    debugger
     try {
       const usuarioLogado = await this.connectHTTP.callService({
         service: 'login',
@@ -112,7 +111,6 @@ export class AuthService {
   }
 
   checkAutenticacao() {
-    debugger
     if (this.usuarioLogadoObject ) {
         return this._getDataExpiracao() && this._getDataExpiracao().getTime() > new Date().getTime() ;
     }
@@ -142,7 +140,6 @@ export class AuthService {
   }
 
   async logout() {
-    debugger
     let usuarioLogado = this.getUsuarioLogadoLocalStorage();
     if (usuarioLogado) {
       await this.connectHTTP.callService({
@@ -159,7 +156,7 @@ export class AuthService {
   }
 
   getUsuarioLogadoLocalStorage() {
-    return this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
+    return this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
   }
 
   _getTokenLogadoLocalStorage() {

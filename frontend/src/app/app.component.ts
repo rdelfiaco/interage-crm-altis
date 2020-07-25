@@ -15,13 +15,13 @@ usuarioLogado: boolean
   }
 
  ngOnInit(){
-   debugger
     this.authService.usarioLogadoEmitter.subscribe(usuarioLogado => 
     { this.usuarioLogado = usuarioLogado})  
     
     if (this.authService.checkAutenticacao()) {
       this.usuarioLogado = true 
     }
+
     
  }
 

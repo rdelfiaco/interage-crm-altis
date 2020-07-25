@@ -9,22 +9,33 @@ import { HttpClientModule } from '@angular/common/http';
 import { AgmCoreModule } from '@agm/core';
 import { AppComponent } from './app.component';
 
-import { MDBBootstrapModulesPro, ToastModule, InputsModule, WavesModule, MDBSpinningPreloader } from 'ng-uikit-pro-standard';
+import {MDBBootstrapModulesPro, 
+        MDBSpinningPreloader, 
+        AccordionModule, 
+        WavesModule, 
+        SidenavModule, 
+        NavbarModule, 
+        InputsModule, 
+        IconsModule,
+        ToastModule, 
+        } from 'ng-uikit-pro-standard';
 import { FooterComponent } from './components/layout/footer/footer.component';
-import { LoginComponent } from './components/pages/login/login.component';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { PageNotFoundComponent } from './components/shared/page-not-found/page-not-found.component';
 import { TesteComponent } from './components/pages/teste/teste.component';
+import { NavComponent } from './components/layout/nav/nav.component';
+import { LoginComponent } from './components/pages/login/login.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderNavComponent,
     FooterComponent,
-    LoginComponent,
     PageNotFoundComponent,
     TesteComponent,
+    NavComponent,
+    LoginComponent,
     
     
   ],
@@ -36,11 +47,14 @@ import { TesteComponent } from './components/pages/teste/teste.component';
     HttpClientModule,
     SharedModule,
     AppRoutingModule,
-    ToastModule.forRoot(),
     MDBBootstrapModulesPro.forRoot(),
-    InputsModule, 
+    ToastModule.forRoot(),
+    AccordionModule,
     WavesModule,
-
+    SidenavModule,
+    NavbarModule,
+    InputsModule,
+    IconsModule,
     AgmCoreModule.forRoot({
       // https://developers.google.com/maps/documentation/javascript/get-api-key?hl=en#key
       apiKey: 'Your_api_key'
