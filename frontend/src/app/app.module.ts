@@ -36,8 +36,6 @@ import { LoginComponent } from './components/pages/login/login.component';
     TesteComponent,
     NavComponent,
     LoginComponent,
-    
-    
   ],
   imports: [
     BrowserModule,
@@ -61,7 +59,7 @@ import { LoginComponent } from './components/pages/login/login.component';
     }),
     
   ],
-  providers: [MDBSpinningPreloader, ],
+  providers: [MDBSpinningPreloader],
   bootstrap: [AppComponent],
   schemas:      [ NO_ERRORS_SCHEMA ],
   

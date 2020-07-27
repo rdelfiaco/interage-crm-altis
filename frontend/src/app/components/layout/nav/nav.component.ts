@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-nav',
@@ -9,16 +11,31 @@ export class NavComponent implements OnInit {
 
 
   
-  constructor() { 
-    
+  constructor( private router: Router, 
+                private authService: AuthService ) { 
+
+    this.authService.pageChose$.subscribe(pageChese_ => {
+      debugger
+      console.log('pageChese_ ', pageChese_  )
+      this.openPage(pageChese_ )
+    })
+
   }
+
+
+
 
   ngOnInit(): void {
 
     
+
+    //this.openPage(this.page)
   }
 
-  openPage( page: string, evento ){
+  openPage( page: string){
+
+    debugger
+    if (page) this.router.navigate([page])
 
   }
 }

@@ -1,10 +1,8 @@
 import { Usuario } from '../../../models/usuario';
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { Router } from '@angular/router';
-import { ConnectHTTP } from 'src/app/shared/services/connectHTTP';
 import { LocalStorage } from 'src/app/shared/services/localStorage';
-import { CheckPermissaoRecurso } from 'src/app/shared/services/checkPemissaoRecurso';
 import { AuthService } from '../../../shared/services/auth.service';
 
 
@@ -15,6 +13,8 @@ import { AuthService } from '../../../shared/services/auth.service';
 })
 export class HeaderNavComponent implements OnInit {
 
+  @Output() pageChoseEmitter = new EventEmitter();
+
   hasLogado: Observable<boolean>;
   usuarioLogado: Usuario;
   nomeUsuario: string = 'Usuário';
@@ -24,14 +24,15 @@ export class HeaderNavComponent implements OnInit {
   counterEvents: number;
   sub: any;
 
+ // pageChoseEmitter  = new EventEmitter<string>();
+  //pageChoseEmitter: BehaviorSubject<string> = new BehaviorSubject<string>('');
 
   
 
   constructor(private router: Router, 
     private auth: AuthService, 
-    private connectHTTP: ConnectHTTP,
     private localStorage: LocalStorage,
-    private checkPermissaoRecurso: CheckPermissaoRecurso ) {
+     ) {
     this.hasLogado = this.auth.estaLogado();
     this.usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
     this.getCounterEvents();
@@ -41,6 +42,7 @@ export class HeaderNavComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
   }
 
   async getCounterEvents() {
@@ -52,21 +54,6 @@ export class HeaderNavComponent implements OnInit {
       });
   }
 
-  // async logout() {
-  //    let usuarioLogado = this.auth.getUsuarioLogadoLocalStorage();
-  //   if (!usuarioLogado) return;
-  //   await this.connectHTTP.callService({
-  //     service: 'logout',
-  //     naoExigeToken: true,
-  //     paramsService: {
-  //       token: usuarioLogado.token,
-  //       id_usuario: usuarioLogado.id
-  //     }
-  //   })
-  //   //this.counterEvents.next(0);
-  //   this.localStorage.delLocalStorage('usuarioLogado', 'object')
-  //   this.router.navigate(['/login']);
-  // }
 
   logout() {
 
@@ -74,25 +61,18 @@ export class HeaderNavComponent implements OnInit {
 
   }
 
-
   openPage(page: string, event: any) {
-    // event.preventDefault();
-    // event.stopPropagation();
-    // setTimeout(_ => {
-    //   this.router.navigate([page]);
-    // }, 100);
 
-    
-  }
+    debugger
+    // this.pageChoseEmitter.emit(page)
+    //this.pageChoseEmitter.next(page)
+    //this.pageChoseEmitter.emit(page)
 
-  abrirCadastroPessoa() {
-    window.open(`/pessoas/${this.usuarioLogado.id_pessoa }`, '_blank')
-  }
-
-  temPermissao(recurso) {
-    return this.checkPermissaoRecurso.usuarioLocadoAcessaRecurso(recurso)
+    this.auth.setPageChose(page)
 
   }
+
+
 
 
 

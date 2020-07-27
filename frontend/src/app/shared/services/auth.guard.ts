@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { AuthService } from './auth.service';
 import { LocalStorage } from './localStorage';
-import { UsuarioLogado } from '../../models/usuario';
+import { Usuario } from '../../models/usuario';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -17,8 +17,8 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot): Observable<boolean> | boolean {
   
    
-   let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as UsuarioLogado;
-
+   let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
+   debugger
    if (usuarioLogado != null) {
       if (this.auth.checkAutenticacao()) {
         if (this._checkPermissaoRota(route, usuarioLogado))
@@ -40,7 +40,8 @@ export class AuthGuard implements CanActivate {
     this.router.navigate(['/login']);
   }
 
-  _checkPermissaoRota(route: ActivatedRouteSnapshot, usuarioLogado: UsuarioLogado) {
+  _checkPermissaoRota(route: ActivatedRouteSnapshot, usuarioLogado: Usuario) {
+    debugger
       let rotas = [];
       (usuarioLogado.permissoes || []).forEach(elem =>{
           if (elem.rota != null) rotas.push(elem.rota)

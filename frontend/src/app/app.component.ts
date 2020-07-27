@@ -1,6 +1,7 @@
 import { AuthService } from './shared/services/auth.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -11,7 +12,9 @@ export class AppComponent implements OnInit  {
 
 usuarioLogado: boolean
 
+
   constructor( private authService: AuthService ){
+
   }
 
  ngOnInit(){
@@ -22,10 +25,6 @@ usuarioLogado: boolean
       this.usuarioLogado = true 
     }
 
-    
  }
-
-
-
 
 }

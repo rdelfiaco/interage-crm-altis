@@ -4,7 +4,7 @@ import { Injectable, EventEmitter } from '@angular/core';
 import { ConnectHTTP } from './connectHTTP';
 import { LocalStorage } from './localStorage';
 import { Router } from '@angular/router';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, Subject } from 'rxjs';
 
 
 @Injectable({
@@ -15,7 +15,23 @@ export class AuthService {
   
   usarioLogadoEmitter  = new EventEmitter<boolean>(false);
 
+  private pageChose = new Subject<string>();
+  pageChose$ = this.pageChose.asObservable();
+
+  setPageChose(page){
+    this.pageChose.next(page)
+  }
+  getPageChose() {
+    return this.pageChose.asObservable();
+  }
+
+
+  
+  
+
   counterEvents: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+
+  
   usuarioLogadoObject: any;
   setInterval: any;
   config: any;
