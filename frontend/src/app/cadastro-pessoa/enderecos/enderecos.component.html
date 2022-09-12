@@ -1,0 +1,141 @@
+<div class="row pt-4 p-3">
+  <div class="col-lg-12">
+    <h4 style="font-weight: bold;color: gray;">Endereços Cadastrados</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Id</th>
+          <th>CEP</th>
+          <th>Cidade</th>
+          <th>Bairro</th>
+          <th>Logra.</th>
+          <th>Comp.</th>
+          <th>Recebe Corres.</th>
+          <th>Ações</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let endereco of (pessoa | async)?.enderecos">
+        <tr>
+          <th>{{endereco.id}}</th>
+          <td>{{endereco.cep}}</td>
+          <td>{{endereco.nome}}</td>
+          <td>{{endereco.bairro}}</td>
+          <td>{{endereco.logradouro}}</td>
+          <td>{{endereco.complemento}}</td>
+          <td>
+            <mdb-checkbox (change)="setEnderecoDeCorrespondencia(endereco)" [checked]="endereco.recebe_correspondencia">
+            </mdb-checkbox>
+          </td>
+          <td>
+            <button (click)="editarEndereco(endereco.id)" type="button" mdbBtn color="blue" outline="true"
+              rounded="true" size="sm" class="px-2" mdbWavesEffect>
+              <mdb-icon fas icon="pencil" class="mt-0"></mdb-icon>
+            </button>
+            <button type="button" mdbBtn color="red"
+              (click)="excluirEndereco(endereco.id); confirmExcluirEndereco.show();" outline="true" rounded="true"
+              size="sm" class="px-2" mdbWavesEffect>
+              <mdb-icon fas icon="trash" class="mt-0"></mdb-icon>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <span *ngIf="_pessoaObject && !_pessoaObject.enderecos.length">Nenhum endereço cadastrado!</span>
+  </div>
+</div>
+<div class="row d-flex justify-content-end mt-3">
+  <button type="button" [disabled]="enderecoSelecionado" mdbBtn color="primary" (click)="adicionarNovoEndereco();"
+    class="relative waves-light" mdbWavesEffect>Adicionar Novo Endereço</button>
+</div>
+<div *ngIf="enderecoSelecionado" class="mt-3">
+  <form [formGroup]="enderecoForm" class="formQuestionario">
+    <div class="row">
+      <div class="col">
+        <div class="md-form">
+          <input mdbInput formControlName="cep" max="11" min="8" type="text" id="cep" class="form-control">
+          <label for="cep">CEP</label>
+        </div>
+      </div>
+      <div class="col-3">
+        <div class="md-form">
+          <button type="button" mdbBtn color="primary" (click)="consultarCEP();" class="relative waves-light"
+            mdbWavesEffect>Buscar</button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <div class="md-form">
+          <input mdbInput formControlName="bairro" type="text" id="bairro" class="form-control">
+          <label for="bairro">Bairro</label>
+        </div>
+      </div>
+      <div class="col-4">
+        <div class="md-form">
+          <input mdbInput formControlName="cidade" type="text" id="cidade" class="form-control">
+          <label for="cidade">Cidade</label>
+        </div>
+      </div>
+      <div class="col-2">
+        <div class="md-form">
+          <input mdbInput formControlName="uf_cidade" type="text" id="estado" class="form-control">
+          <label for="estado">Estado</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="md-form">
+          <input mdbInput formControlName="logradouro" type="text" id="logradouro" class="form-control">
+          <label for="logradouro">Logradouro</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="md-form">
+          <input mdbInput formControlName="complemento" type="text" id="complemento" class="form-control">
+          <label for="complemento">Complemento</label>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="md-form">
+        <button type="button" mdbBtn color="danger" (click)="cancelarAdd();" class="relative waves-light"
+          mdbWavesEffect>Cancelar</button>
+      </div>
+      <div class="md-form">
+        <button type="button" mdbBtn color="primary" (click)="salvar();" class="relative waves-light" mdbWavesEffect
+          [disabled]="!enderecoForm.valid">Salvar Endereço</button>
+      </div>
+    </div>
+  </form>
+</div>
+
+<div mdbModal #confirmExcluirEndereco="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: true}">
+  <div class="modal-dialog modal-fluid" role="document">
+    <div class="modal-header light-blue darken-3 white-text">
+      <h4 class="modal-title w-100" id="myModalLabel">Excluir Endereço</h4>
+      <button type="button" class="close pull-right" aria-label="Close" (click)="confirmExcluirEndereco.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-content">
+      <div *ngIf="enderecoExclusao" class="modal-body">
+        {{enderecoExclusao.cep}} {{enderecoExclusao.cidade}} {{enderecoExclusao.bairro}}
+        {{enderecoExclusao.logradouro}} {{enderecoExclusao.complemento}}
+      </div>
+      <div class="row justify-content-end">
+        <div class="md-form">
+          <button type="button" mdbBtn color="danger" class="waves-light" aria-label="Cancelar"
+            (click)="confirmExcluirEndereco.hide(); cancelaExclusaoEndereco()" mdbWavesEffect>Cancelar</button>
+        </div>
+        <div class="md-form">
+          <button type="button" mdbBtn color="primary" class="relative waves-light"
+            (click)="confirmExcluirEndereco.hide(); confirmaExclusaoEndereco();" mdbWavesEffect>Confirma</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

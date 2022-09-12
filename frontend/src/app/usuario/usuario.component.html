@@ -1,0 +1,43 @@
+<div class="card card-cascade narrower">
+  <div
+    class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-center align-items-center">
+    <div>
+      <button type="button" mdbBtn color="white" outline="true" rounded="true" size="sm" class="px-2" mdbWavesEffect>
+        <mdb-icon fas fas icon="info" class="mt-0"></mdb-icon>
+      </button>
+    </div>
+    <h4 class="white-text mx-3 mt-2 font-weight-bold text-uppercase">Usuários</h4>
+  </div>
+  <div class="px-0">
+    <mdb-tabset #abasTabs [buttonClass]="'classic-tabs tabs-cyan'" class="classic-tabs">
+      <mdb-tab heading="Usuários">
+        <div class="row">
+          <div class="col-lg-12">
+            <app-listar-usuarios></app-listar-usuarios>
+          </div>
+        </div>
+      </mdb-tab>
+      <mdb-tab heading="Campanhas" [disabled]="abaAtual != 2">
+        <div class="row">
+          <div class="col-lg-12">
+            <app-usuario-campanhas></app-usuario-campanhas>
+          </div>
+        </div>
+      </mdb-tab>
+      <mdb-tab heading="Permissões" [disabled]="abaAtual != 3">
+        <div class="row">
+          <div class="col-lg-12">
+            <app-usuario-permissoes></app-usuario-permissoes>
+          </div>
+        </div>
+      </mdb-tab>
+      <mdb-tab heading="Carteira de clientes" [disabled]="abaAtual != 4">
+        <div class="row">
+          <div class="col-lg-12">
+            <app-usuario-carteira></app-usuario-carteira>
+          </div>
+        </div>
+      </mdb-tab>
+    </mdb-tabset>
+  </div>
+</div>

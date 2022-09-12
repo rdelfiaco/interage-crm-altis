@@ -1,0 +1,43 @@
+<!-- Start your project here-->
+<div style="height: 100vh" class="login-page">
+  <div class="d-flex justify-content-center align-items-center h-100">
+    <div class="container-fluid">
+      <div class="row justify-content-center">
+        <div class="col-md-4 ">
+          <form [formGroup]="loginForm" class="login-container" (ngSubmit)="fazerLogin()">
+            <div class="form-content">
+              <div class="logo">
+                <img class="" src="/assets/imagens/logos/logo_altis.jpg">
+              </div>
+              <div class="md-form campo-email">
+                <i class="fa fa-user prefix grey-text comp-margin-left"></i>
+                <input type="text"  autocomplete="username" id="loginForm-login" class="form-control" formControlName="login"
+                  data-error="favor digitar seu login" #login mdbInput >
+                <label for="loginForm-login">login</label>
+              </div>
+
+              <div class="md-form campo-senha">
+                <i class="fa fa-lock prefix grey-text comp-margin-left"></i>
+                <input type="password" autocomplete="current-password" id="loginForm-senha" class="form-control" formControlName="senha"
+                  data-error="favor digitar sua senha" mdbInput>
+                <label for="loginForm-senha">Senha</label>
+              </div>
+
+              <!-- <div class="text-center btn-login"> -->
+                <button mdbBtn outline="true" block="true" class="btn-login btn btn-deep-blue waves-light" type="submit"
+                  mdbWavesEffect [disabled]="!loginForm.valid">Entrar</button>
+              <!-- </div> -->
+              <small>Copyright © RCI Sistemas 2019</small>
+            </div>
+
+          </form>
+          <!--/Register form-->
+
+        </div>
+        <!-- Grid column -->
+
+      </div>
+      <!-- Grid row -->
+    </div>
+
+    <!-- /Start your project here-->

@@ -1,8 +1,8 @@
-import { Usuario } from '../../models/usuario';
 
 import { LocalStorage } from "./localStorage";
-import { ConnectHTTP } from "./connectHTTP"; 
-import { ToastService } from 'ng-uikit-pro-standard';
+import { Usuario } from "../../login/usuario";
+import { ConnectHTTP } from "./connectHTTP";
+import { ToastService } from "ng-uikit-pro-standard";
 
 export class BancoDados
 {

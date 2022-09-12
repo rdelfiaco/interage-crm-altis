@@ -1,0 +1,315 @@
+
+<mdb-card cascade="true" narrower="true">
+ 
+  <div *ngIf="!formularioGraficoResposta" > 
+  <!--Card image-->
+  <div
+    class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-between align-items-center">
+    <div>
+      <button type="button" mdbBtn color="white" outline="true" rounded="true" size="sm" class="px-2" mdbWavesEffect>
+        <mdb-icon fas fas icon="info" class="mt-0"></mdb-icon>
+      </button>
+    </div>
+    <h4 class="white-text mx-3 mt-2 font-weight-bold text-uppercase">Detalhes da campanha: {{nome}}</h4>
+    <div>
+      <button mdbBtn color="white" outline="true" rounded="true" size="sm" type="button" (click)="voltar();"
+        class="px-2" mdbWavesEffect>
+        Voltar
+      </button>
+    </div>
+  </div>
+  <div class="px-4">
+    <div class="row mt-4">
+      <div class="col-lg-12 text-center">
+        <h4 style="font-weight: bold;color: dimgray;">Clique no status ou no usuário para lista seus detalhes</h4>
+      </div>
+    </div>
+    <div class="row px-2 mb-3">
+      <div class="col-6 col-sm-6">
+        <div class="md-form datas">
+          <mdb-date-picker #dataEventos name="mydate" [options]="myDatePickerOptions" required [(ngModel)]="dataInicial"
+            class="datas" (ngModelChange)="getDetalheCampanha(); salvaDataAlterada() "></mdb-date-picker>
+          <label class="datas" style="height: 10px">Data inicial</label>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6">
+        <div class="md-form datas">
+          <mdb-date-picker #dataEventos name="mydate" [options]="myDatePickerOptions" required [(ngModel)]="dataFinal"
+            class="datas" (ngModelChange)="getDetalheCampanha(); salvaDataAlterada() "></mdb-date-picker>
+          <label class="datas" style="height: 10px">Data final</label>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 col-sm-6">
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-1 mx-2  d-flex justify-content-center align-items-center">
+          <h6 class="white-text font-weight-bold text-uppercase mt-2 ">Status</h6>
+          <div style="right: 0;position: absolute;">
+            <button mdbBtn color="white" outline="true" rounded="true" size="sm" type="button"
+            (click)="dadosParaGrafico(detalheCampanhaStatus, 'Status dos contados' ); formulario.show()"  class="px-2" mdbWavesEffect>
+              Gráfico
+            </button>
+          </div>
+        </div>
+        <div style="display: block">
+          <!--Table-->
+          <table class="table table-hover table-responsive-md mb-0">
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th>Status </th>
+                <th>Total </th>
+                <th>Analítico</th>
+              </tr>
+            </thead>
+            <!--Table head-->
+
+            <tbody>
+              <tr #list *ngFor="let evento of detalheCampanhaStatus">
+                <td (click)="detalheStatus(evento.id_resp_motivo, evento.status_ligacao )">{{evento.status_ligacao}}
+                </td>
+                <td>{{evento.total}}</td>
+                <td>
+                  <i style="margin-left: 10px;" class="fa fa-search font-weight " (click)="showAnalitico(evento, 'status')" ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6">
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-1 mx-2  d-flex justify-content-center align-items-center">
+          <h6 class="white-text font-weight-bold text-uppercase mt-2 ">Usuários</h6>
+        </div>
+        <div style="display: block">
+          <!--Table-->
+          <table class="table table-hover table-responsive-md mb-0">
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th>Usuários</th>
+                <th>Total </th>
+                <th>Analítico</th>
+              </tr>
+            </thead>
+            <!--Table head-->
+
+            <tbody>
+              <tr #list *ngFor="let evento of detalheCampanhaConsultor">
+                <td (click)="detalheUsuario(evento.id_pessoa_resolveu, evento.pessoa_resolveu)">
+                  {{evento.pessoa_resolveu}}</td>
+                <td>{{evento.total}}</td>
+                <td>
+                  <i style="margin-left: 10px;" class="fa fa-search font-weight " (click)="showAnalitico(evento, 'usuario')" ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-6 col-sm-6">
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-1 mx-2  d-flex justify-content-center align-items-center">
+          <h6 class="white-text font-weight-bold mt-2 ">Usuários do status {{statusSelecionado}}</h6>
+        </div>
+        <div style="display: block">
+          <!--Table-->
+          <table class="table table-hover table-responsive-md mb-0">
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th>Usuários</th>
+                <th>Total </th>
+                <th>Analítico</th>
+              </tr>
+            </thead>
+            <!--Table head-->
+
+            <tbody>
+              <tr #list *ngFor="let evento of detalheCampanhaStatusConsultor">
+                <td>{{evento.pessoa_resolveu}}</td>
+                <td>{{evento.total}}</td>
+                <td>
+                  <i style="margin-left: 10px;" class="fa fa-search font-weight " (click)="showAnalitico(evento, 'usuarioStatus')" ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6">
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-1 mx-2  d-flex justify-content-center align-items-center">
+          <h6 class="white-text font-weight-bold mt-2 ">Status do usuários {{usuarioSelecionado}}</h6>
+        </div>
+        <div style="display: block">
+          <!--Table-->
+          <table class="table table-hover table-responsive-md mb-0">
+            <!--Table head-->
+            <thead>
+              <tr>
+                <th>Status </th>
+                <th>Total </th>
+                <th>Analítico</th>
+              </tr>
+            </thead>
+            <!--Table head-->
+
+            <tbody>
+              <tr #list *ngFor="let evento of detalheCampanhaConsultorStatus">
+                <td>{{evento.status_ligacao}}</td>
+                <td>{{evento.total}}</td>
+                <td>
+                  <i style="margin-left: 10px;" class="fa fa-search font-weight " (click)="showAnalitico(evento, 'statusUsuario')" ></i>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4 mb-5">
+      <div class="col-6 col-sm-6">
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-1 mx-2  d-flex justify-content-center align-items-center">
+          <h6 class="white-text font-weight-bold mt-2 ">Respostas</h6>
+          <div style="right: 0;position: absolute;">
+            <button mdbBtn color="white" outline="true" rounded="true" size="sm" type="button"
+            (click)="povoaVetoresGraficoPerguntas()"  class="px-2" mdbWavesEffect>
+              Gráfico
+            </button>
+          </div>
+        </div>
+        <div class="mt-3">
+          <ngx-treeview [config]="config" [items]="items_" (selectedChange)="onSelectedChange($event)"
+            (filterChange)="onFilterChange($event)">
+          </ngx-treeview>
+        </div>
+      </div>
+      <div class="col-6 col-sm-6">
+        <div
+          class="view view-cascade gradient-card-header blue-gradient narrower py-1 mx-2  d-flex justify-content-center align-items-center">
+          <h6 class="white-text font-weight-bold mt-2 ">Resumo analítico de respostas</h6>
+          <div style="right: 0;position: absolute;">
+            <button mdbBtn color="white" outline="true" rounded="true" size="sm" type="button"
+              (click)="exportaAnalitico()" class="px-2" mdbWavesEffect>
+              Exportar
+            </button>
+          </div>
+        </div>
+        <h6 *ngIf="questRespAnalitica.length" class="white-black font-weight-bold mt-4 mt-0 ml-2 ">Total de Respostas:
+          {{questRespAnalitica.length}}</h6>
+        <div class="table-responsive table-resp">
+          <table class="table table-hover table-responsive-md mb-0">
+            <thead>
+              <tr>
+                <th>Cliente</th>
+                <th>Data Resposta</th>
+                <th>Usuário</th>
+                <th>Pergunta</th>
+                <th>Alternativa</th>
+                <th>Observação</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of questRespAnalitica">
+                <td>{{item.cliente}}</td>
+                <td>{{transformData(item.dt_resposta)}}</td>
+                <td>{{item.usuario}}</td>
+                <td>{{item.pergunda}}</td>
+                <td>{{item.alternativa}}</td>
+                <td>{{item.observacao}}</td>
+                <!-- <td>{{getObservacao(item)}}</td> -->
+              </tr>
+              <tr *ngIf="!questRespAnalitica.length">
+                <td colspan="5" class="text-center">Nenhuma resposta selecionada ou não existe registros para as
+                  selecionadas.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- <ngx-dropdown-treeview [config]="config" [headerTemplate]="headerTemplate" [items]="items_" [itemTemplate]="itemTemplate">
+  </ngx-dropdown-treeview> -->
+  <!-- <dropdown-treeview-select [items]="items_" [(value)]="value" (valueChange)="onSelectedChange($event)"  (filterChange)="onFilterChange($event)">
+  </dropdown-treeview-select> -->
+  </div>
+
+  <div *ngIf="formularioGraficoResposta"  >
+    <br>
+    <div class="col-lg-12">
+        <div class="md-form">
+            <button type="button" mdbBtn color="info" mdbWavesEffect (click)="montaGraficosPerguntas()">Gerar Gráfico</button>
+            <button type="button" mdbBtn color="info" mdbWavesEffect (click)="gerarPDF('formularioGraficoResposta')">PDF</button>
+            <button type="button" mdbBtn color="danger" mdbWavesEffect (click)="fecharFormularioGraficoResposta()">Voltar</button>
+        </div>
+    </div>
+    <div id=formularioGraficoResposta>
+        <div class="text-center">
+            <h4>Gráficos das Perguntas</h4>
+        </div>
+        <div style="margin-left: 10px;">
+          <h6>Período: {{dataInicial}} a {{dataFinal}} </h6>
+        </div>
+        <br>
+        <div *ngFor="let data of chartData" class="chart">
+            <canvas #pr_chart ></canvas>
+        </div>
+        <br>
+        <br>
+    </div>
+
+
+  </div>
+ 
+  
+</mdb-card>
+
+
+
+<div mdbModal #formulario="mdbModal" class="modal fade top"  tabindex="-1"  role="dialog" 
+      aria-labelledby="myBasicModalLabel" aria-hidden="true" >
+<div class="modal-dialog  modal-lg" role="document">
+    <div class="modal-header light-blue darken-3 white-text">
+        <h4 class="modal-title">{{titulo}}</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="formulario.hide()">
+          <span aria-hidden="true" style="color:white; cursor:pointer;">&times;</span>
+        </button>
+    </div>
+        <div class="modal-content"  >
+          <div class="modal-body">
+            <div style="display: block" id=graficoStatus>
+              <canvas mdbChart 
+                  [chartType]="chartTypeIB"
+                  [datasets]="chartDatasetsIB"
+                  [labels]="chartLabelsIB"
+                  [colors]="chartColorsIB"
+                  [options]="chartOptionsIB"
+                  [legend]="true"
+                  (chartHover)="chartHoveredIB($event)"
+                  (chartClick)="chartClickedIB($event)">
+              </canvas>
+              <br>
+            </div>
+        </div>
+      <div class="modal-footer">
+        <div class="col-lg-12">
+          <div class="md-form">
+              <button type="button" mdbBtn color="info" mdbWavesEffect (click)="gerarPDF('graficoStatus')">PDF</button>
+              <button type="button" mdbBtn color="danger" mdbWavesEffect (click)="formulario.hide()">Voltar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+  
+</div>
+

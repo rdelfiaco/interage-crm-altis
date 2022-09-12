@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import cnpj from "../../services/validaCnpj"
+import cnpj from "../../validaCnpj"
 
 @Pipe({
   name: 'cnpj'

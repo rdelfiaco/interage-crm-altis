@@ -1,5 +1,6 @@
-import { Usuario } from '../../models/usuario';
-import { LocalStorage } from './localStorage';
+import { LocalStorage } from "./localStorage";
+import { Usuario } from "../../login/usuario";
+
 
 // var localSevidor = "http://88.99.35.190:3000/" //Producao
 var localSevidor =   "http://localhost:3010/";  //Local
@@ -21,13 +22,12 @@ export class ConnectHTTP {
   
   localStorage: LocalStorage = new LocalStorage();
   callService(options: optionsCallService): Promise<retObjectCallService> | retObjectCallService {
-    
     const mensagem = this._checkOptionsCallService(options);
     if (mensagem && !mensagem.error) return mensagem;
     return new Promise((resolve, reject) => {
       //TROCA DADOS SERVIDOR
-
       const host = options.host || localSevidor;
+
       const service = options.service
       let url = `${host}${service}`
       if (!options.naoExigeToken) {
@@ -246,54 +246,7 @@ export class ConnectHTTP {
     })
   }
 
-  postAPI(options: optionsCallService): Promise<retObjectCallService> | retObjectCallService {
-    const mensagem = this._checkOptionsCallService(options);
-    if (mensagem && !mensagem.error) return mensagem;
-
-    if (!options.paramsService.arquivo) return { error: 'É necessário enviar o arquivo.', resposta: {} };
-    
-    return new Promise((resolve, reject) => {
-      
-      //TROCA DADOS SERVIDOR
-      const host = options.host || localSevidor;
-
-      const service = options.service
-
-      const arquivo = options.paramsService.arquivo.proposta ;
-
-      let url = `${host}${service}`
-
-      if (!options.naoExigeToken) {
-        let usuarioLogado = this.localStorage.getLocalStorage('usuarioLogado') as Usuario;
-        if (usuarioLogado != undefined ){
-          options.paramsService = {
-            //...options.paramsService,
-            id_usuario: usuarioLogado.id.toString(),
-            token: usuarioLogado.token
-          }
-          
-          url = `${host}${service}?id_usuario=${usuarioLogado.id.toString()}&token=${usuarioLogado.token}`
-
-        }
-      }
-
-      const body = JSON.stringify( {teste: 123})
-      let arquivo1 = {
-        name: 'John',
-        surname: 'Smith'
-      };
-      var parametros = 
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(arquivo1)
-        }
-    
-   
-
-
-    })
-  }
+ 
 
 
 }

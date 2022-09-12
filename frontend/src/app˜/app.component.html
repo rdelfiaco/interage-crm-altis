@@ -1,0 +1,22 @@
+
+<!-- <mdb-spinner style="margin: 40% "  spinnerType="big"></mdb-spinner>
+<mdb-progress-bar class="progress primary-color-dark" mode="indeterminate"></mdb-progress-bar>
+ -->
+<div  *ngIf="usuarioLogado" >
+    <div class="wrapper" >
+            <header1>
+                <app-header-nav  ></app-header-nav>
+            </header1>
+            <main1>
+                <app-nav > </app-nav>
+            </main1>
+            <footer1>
+                <app-footer class="footer" ></app-footer>
+            </footer1>
+    </div> 
+
+    
+</div>
+
+
+<app-login *ngIf="!usuarioLogado" > </app-login>

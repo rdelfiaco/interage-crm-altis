@@ -1,0 +1,141 @@
+<div *ngIf="eventos" class="acordionEvento">
+  <mdb-accordion *ngFor="let evento of eventos">
+    <mdb-accordion-item [collapsed]="true" [customClass]="'itemAcordion'">
+      <mdb-accordion-item-head [indicator]="evento.eventosFilho"
+        [customClass]="'text-center justify-content-start align-items-center'">
+        <div class="row align-items-center">
+          <div class="col-12">
+            <div class="row">
+              <button [ngClass]="{'col-2': !notVendas, 'col-1': notVendas}" (click)="abreEvento($event, evento);" color="blue" style="white-space: pre;" mdbBtn type="button"  size="sm" mdbWavesEffect>Detalhe</button>
+              <div [ngClass]="{'col-3': !notVendas, 'col-2': notVendas}" class="font12" title="Motivo do evento" style="white-space: pre; margin-top: 15px">
+              <h6>  {{evento.motivo}} </h6>
+              </div>
+              <div [ngClass]="{'col-3': !notVendas, 'col-2': notVendas}" class="font12" title="Status do evento" style="margin-top: 15px">
+              <h6>  {{evento.status}} </h6>
+              </div>
+              <div [ngClass]="{'col-3': !notVendas, 'col-2': notVendas}" class="font12" title="Data resolvido ou data prevista para resolução"
+                style="white-space: nowrap; margin-top: 15px"> 
+                  <h6>{{(evento.dt_resolvido
+                  ||
+                  evento.dt_prevista_resolucao) | date:'dd/MM/yyyy HH:mm:ss'}}
+                  </h6> 
+              </div>
+              <div *ngIf="notVendas" class=" col-2 font12" title="Pessoa que visualizou o evento"
+                style="white-space: nowrap; margin-top: 15px"><h6>{{evento.pessoa_visualizou}}</h6></div>
+              <div *ngIf="notVendas" class=" col-2 font12" title="Pessoa que resolveu o evento"
+                style="white-space: nowrap; margin-top: 15px"><h6>{{evento.pessoa_resolveu}}</h6></div>
+            </div>
+          </div>
+        </div>
+      </mdb-accordion-item-head>
+      <mdb-accordion-item-body *ngIf="evento.eventosFilho">
+        <app-item-de-evento [eventos]="evento.eventosFilho"></app-item-de-evento>
+      </mdb-accordion-item-body>
+    </mdb-accordion-item>
+  </mdb-accordion>
+</div>
+
+<div mdbModal #modalConcluirEvento="mdbModal" [config]="{backdrop: true}" class="modal fade right" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fluid" role="document">
+    <div *ngIf="pessoaObject" class="modal-header light-blue darken-3 white-text">
+      <h4 class="modal-title w-100" id="myModalLabel">{{concluirOuEncaminhar}} Evento -
+        {{pessoaObject.principal.nome}}</h4>
+      <button type="button" style="cursor:pointer;" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="modalConcluirEvento.hide()">
+        <span aria-hidden="true" style="color:white; cursor:pointer;">&times;</span>
+      </button>
+    </div>
+    <div class="modal-content">
+      <div *ngIf="pessoaObject" class="modal-body" style="overflow: auto; height: 80vh;">
+        <app-concluir-evento *ngIf="concluir" [evento]="evento" [pessoa]="pessoa"
+          [motivos_respostas]="motivos_respostas" [predicoes]="predicoes" [objecoes]="objecoes"
+          (fechaModal)="fechaModal()"></app-concluir-evento>
+
+        <app-encaminhar-evento *ngIf="encaminhar" [evento]="evento" [pessoa]="pessoa" (fechaModal)="fechaModal()">
+        </app-encaminhar-evento>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mdbModal #confirmSeTornarResponsavelModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: true}">
+  <div class="modal-dialog modal-fluid" role="document">
+    <div class="modal-header light-blue darken-3 white-text">
+      <h4 class="modal-title w-100" id="myModalLabel">Confirma Responsabilidade</h4>
+      <button type="button" class="close pull-right" aria-label="Close"
+        (click)="confirmSeTornarResponsavelModal.hide()">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-content">
+      <div *ngIf="tornarResponsavel" class="modal-body">
+        Deseja se tornar responsável do evento do cliente {{tornarResponsavel.cliente}}
+      </div>
+      <div class="row justify-content-end">
+        <div class="md-form">
+          <button type="button" style="white-space: nowrap;" mdbBtn color="danger" class="waves-light"
+            aria-label="Cancelar" (click)="confirmSeTornarResponsavelModal.hide(); cancelaSeTornarResponsavel()"
+            mdbWavesEffect>Cancelar</button>
+        </div>
+        <div class="md-form">
+          <button *ngIf="usuarioLogadoSupervisor" type="button" style="white-space: nowrap;" mdbBtn color="warning"
+            class="waves-light" aria-label="Somente Visualizar"
+            (click)="confirmSeTornarResponsavelModal.hide(); visualizarEvento($event)" mdbWavesEffect>Somente
+            Visualizar</button>
+        </div>
+        <div class="md-form">
+          <button type="button" style="white-space: nowrap;" mdbBtn color="primary" class="relative waves-light"
+            (click)="confirmSeTornarResponsavelModal.hide(); confirmaSeTornarResponsavel($event);"
+            mdbWavesEffect>Sim</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div mdbModal #visualizarDetalhesEvento="mdbModal" [config]="{backdrop: true, ignoreBackdropClick: false}"
+  class="modal fade right" role="dialog" aria-labelledby="myBasicModalLabel" aria-hidden="false">
+  <div class="modal-dialog modal-fluid" role="document">
+    <div *ngIf="eventoSelecionado" class="modal-header light-blue darken-3 white-text">
+      <h4  class="modal-title w-90" id="myModalLabel">Evento {{eventoSelecionado.motivo}}
+        <button *ngIf="eventoSelecionado && eventoSelecionado.excedeu_tentativas" mdbBtn type="button" color="danger"
+          size="sm" mdbWavesEffect>Excedeu Tentativas</button></h4>
+      <button type="button" style="cursor:pointer;" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="visualizarDetalhesEvento.hide()">
+        <span aria-hidden="true" style="color:white; cursor:pointer;">&times;</span>
+      </button>
+      <!-- <button type="button" class="close pull-right" aria-label="Close" (click)="">
+        <span aria-hidden="true">×</span>
+      </button> -->
+    </div>
+    <div class="modal-content">
+      <div class="modal-body" style="overflow: auto; height: 80vh;">
+        <div class="row" style="padding: 0px 15px;">
+          <div class="md-form col-12">
+            <div *ngIf="eventoSelecionado" style="padding: 10px;">
+              <div class="row justify-content-end">
+                <div class="md-form">
+                  <button type="button" [disabled]="!podeConcluir" style="white-space: nowrap;" mdbBtn color="primary"
+                    class="waves-light" aria-label="Somente Visualizar" (click)="concluirEvento()"
+                    mdbWavesEffect>Concluir</button>
+                </div>
+                <div class="md-form">
+                  <button type="button" [disabled]="!podeEncaminhar" (click)="encaminharEvento()"
+                    style="white-space: nowrap;" mdbBtn color="warning" class="relative waves-light"
+                    mdbWavesEffect>Encaminhar</button>
+                </div>
+              </div>
+              <app-formulario-evento [evento]="eventoSelecionado"></app-formulario-evento>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!podeVisualizarEvento">
+  <app-sem-permissao></app-sem-permissao>
+</div>

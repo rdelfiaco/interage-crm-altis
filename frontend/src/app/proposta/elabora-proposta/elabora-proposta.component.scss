@@ -1,0 +1,34 @@
+.comboDescricao {
+    font-size: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-align: center;
+}
+
+.content {
+    display: flex;
+}
+
+.tabelaPrecos {
+    background-color: powderblue;
+}
+
+.tabelaChck {
+    //margin-left: 100px; 
+    text-align: center; //width: 150px;
+}
+
+.precosDaProposta>.row {
+    background-color: #99daf7;
+    border-radius: 10px;
+    padding: 4px;
+}
+
+.cabecalhoValorBase {
+    padding-top: 20px;
+}
+
+.tituloProposta {
+    font-size: 0.9em;
+}
+

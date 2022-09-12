@@ -1,0 +1,66 @@
+<div class="card">
+    <div
+    class="view view-cascade gradient-card-header blue-gradient narrower py-2 mx-4 mb-3 d-flex justify-content-center align-items-center">
+    <div>
+      <button type="button" mdbBtn color="white" outline="true" rounded="true" size="sm" class="px-2" mdbWavesEffect>
+        <mdb-icon fas fas icon="info" class="mt-0"></mdb-icon>
+      </button>
+    </div>
+    <h4 class="white-text mx-3 mt-2 font-weight-bold text-uppercase">Arquivos anexados</h4>
+  </div>
+  <div class="row">
+
+    <div class="col text-right"  style="margin-right: 15px;" >
+      <button type="button" mdbBtn color="primary" (click)="adicionarModal.show()"
+        class="relative waves-light" mdbWavesEffect>Anexar novo arquivo</button>
+    </div>
+  </div>
+
+  <br>  
+  <div class="row mt-3">
+    <div class="col-lg-12">
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="th-sm">Arquivos
+            </th>
+          </tr>
+        </thead>
+        <tbody *ngFor="let file of fileTable">
+          <tr>
+            <td>{{file.nome}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+
+
+
+</div>
+
+
+<div mdbModal #adicionarModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: true}">
+  <div class="modal-dialog modal-fluid" role="document">
+    <div class="modal-header light-blue darken-3 white-text">
+      <h4 class="modal-title">Anexar arquivo</h4>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="adicionarModal.hide()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-content" > 
+      <div class="file-field md-form">
+        <div mdbBtn color="primary" size="sm" class="waves-light" mdbWavesEffect>
+          <span>Selecionar arquivos</span>
+          <input type="file" mdbFileSelect [options]="options" (uploadOutput)="onUploadOutput($event)" [uploadInput]="uploadInput" multiple >
+        </div>
+        <div class="file-path-wrapper">
+          <input class="file-path" type="text" placeholder="Upload dos arquivos selecionados" [value]="showFiles()">
+        </div>
+      </div>
+      <button mdbBtn color="primary" (click)="startUpload() ; adicionarModal.hide() " [disabled]="showFiles() == '' "  >Realizar o upload</button>
+
+  </div>
+</div>

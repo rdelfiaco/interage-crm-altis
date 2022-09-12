@@ -1,0 +1,27 @@
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+    }
+    
+.wrapper .main1 {
+    flex: 1;
+    margin-top: 65px;
+    }
+
+.wrapper .footer1 {
+    bottom: 0;
+    width: 100%;
+    position: fixed;
+}
+
+
+
+// @media only screen and (max-width: 1200px) {
+//     .main  {
+//         margin-left: 0;
+//         margin-right: 0;
+
+// }
+
+// }

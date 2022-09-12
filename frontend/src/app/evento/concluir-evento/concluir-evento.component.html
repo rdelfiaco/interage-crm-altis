@@ -1,0 +1,66 @@
+<form [formGroup]="questionarioForm" class="formQuestionario">
+  <div  class="row">
+    <div class="col">
+      <mdb-select (selected)="selecionaMotivoResposta($event)" [options]="motivosRespostasFormatado" [multiple]="false"
+        placeholder="Resultado do contato"></mdb-select>
+    </div>
+  </div>
+  <div  class="row">
+    <div class="md-form col">
+      <textarea type="text" id="form7" formControlName="observacao" class="md-textarea form-control" mdbInput></textarea>
+      <label for="form7">Observação</label>
+    </div>
+  </div>
+
+  <div *ngIf="exige_predicao" class="row">
+    <div class="col">
+      <mdb-select formControlName="id_predicao" [options]="predicoesFormatado" [multiple]="false" placeholder="Selecione a previsão">
+      </mdb-select>
+    </div>
+  </div>
+
+  <div *ngIf="exige_objecao" class="row">
+    <div class="col">
+      <mdb-select formControlName="id_objecao" [options]="objecoesFormatado" [multiple]="false" placeholder="Selecione a objeção">
+      </mdb-select>
+    </div>
+  </div>
+
+  <div *ngIf="reagendar" class="row">
+    <div class="md-form form-group col">
+      <mdb-date-picker #dataReagendamento (dateChanged)="onDateChange($event)" formControlName="data" name="mydate"
+        [options]="myDatePickerOptions" [placeholder]="'Selecione a data'" required></mdb-date-picker>
+      <label for="telefoneDiscado" class="">Data Reagendamento</label>
+    </div>
+    <div class="md-form form-group col">
+      <mdb-time-picker [buttonLabel]="'Done'" [twelvehour]="false" [darktheme]="true" [placeholder]="'Selecione a hora'"
+        [label]="'Hora Reagendamento'" formControlName="hora"></mdb-time-picker>
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="md-form">
+      <button type="button" mdbBtn color="primary" (click)="concluiEvento();" class="relative waves-light"
+        mdbWavesEffect [disabled]="!questionarioForm.valid" >Gravar</button>
+    </div>
+  </div>
+
+  <div mdbModal #respquestionarioModal="mdbModal" class="modal fade" tabindex="-1" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true" [config]="{backdrop: true, ignoreBackdropClick: true}">
+  <div class="modal-dialog modal-resp-questionario  modal-fluid" role="document">
+    <div class="modal-content p-0">
+      <div class="modal-header light-blue darken-3 white-text">
+        <h4 class="modal-title">Responder Questionário</h4>
+        <button type="button" style="cursor:pointer;" class="close" data-dismiss="modal" aria-label="Close"
+          (click)="respquestionarioModal.hide()">
+          <span aria-hidden="true" style="color:white; cursor:pointer;">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body p-4">
+        <app-responder-questionario *ngIf="(questId && eventoId && pessoaId)" [questId]="questId" [receptorId]="pessoaId"
+          [eventoId]="eventoId" (callback)="encerrouQuest($event)"></app-responder-questionario>
+      </div>
+    </div>
+  </div>
+</div>
+
+</form>

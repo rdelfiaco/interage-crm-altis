@@ -1,0 +1,25 @@
+<!-- <iframe style="border: 0;" id="tbl-fipe"
+    src="https://www.qualveiculo.net" 
+    width="1100px" height="800px" frameborder="0" scrolling="no">
+  </iframe> -->
+
+<form [formGroup]="formulario">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="md-form">
+        <input mdbInput type="text" formControlName="placa" id="placa" [mdbValidate]="false"
+          class="form-control" (keyup)="consultarPlaca($event)">
+        <label for="placa" class="">Digite o número da Placa e tecle ENTER para consultar</label>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="md-form col">
+        <textarea type="text" id="placaConsultada" rows="20" formControlName="placaConsultada"
+          class="md-textarea form-control" mdbInput></textarea>
+        <label for="placaConsultada">Resultado da consulta</label>
+      </div>
+    </div>
+  </div>
+</form>

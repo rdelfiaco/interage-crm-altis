@@ -1,0 +1,275 @@
+<form [formGroup]="principalForm" class="formQuestionario mt-3">
+
+  <div *ngIf="tipoPessoaSelecionada == 'F'">
+    <div class="row">
+      <div class="col mdb-select-form">
+        <mdb-select formControlName="tipo" (selected)="getSelectedValuePessoa($event)" [options]="tipoDePessoa"
+          [multiple]="false" placeholder="Tipo de pessoa"></mdb-select>
+        <label>Pessoa</label>
+      </div>
+      <div class="col-4 mdb-select-form">
+        <mdb-select formControlName="id_pronome_tratamento" [options]="tipoDeTratamentoFisica" [multiple]="false"
+          placeholder="Tipo de tratamento"></mdb-select>
+        <label>Tipo de tratamento</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="md-form col">
+        <input mdbInput formControlName="nome" type="text" id="nome" (blur)="nomeMaiusculo()"
+          class="form-control">
+        <label for="nome">Nome</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="md-form col">
+        <input mdbInput formControlName="apelido_fantasia" type="text" id="apelido" class="form-control">
+        <label for="apelido">Apelido</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="md-form col-3" style="margin-top: -3px" >
+        <mdb-date-picker formControlName="datanascimento" #datanascimento name="mydate" [options]="myDatePickerOptions"
+          [placeholder]="'Selecione a data'" required id="datanascimento_">
+        </mdb-date-picker>
+        <label for="datanascimento_"  >Data Nascimento</label>
+      </div>
+      <div class="col-3 mdb-select-form">
+        <mdb-select formControlName="sexo" [placeholder]="'Selecione o Sexo'" [options]="enumSexo" [multiple]="false">
+        </mdb-select>
+        <label>Sexo</label>
+      </div>
+      <div class="mdb-select-form col-6">
+          <mdb-select [filterEnabled]="true" formControlName="id_usuario_carteira" [placeholder]="'Selecione o usuário consultor'"
+            [options]="usuariosCarteira" [multiple]="false"></mdb-select>
+          <label>Consultor</label>
+        </div>
+    </div>
+
+    <div class="row">
+      <div class="md-form col-3">
+        <input mdbInput formControlName="rg_ie" type="text" id="rg" class="form-control">
+        <label for="rg">RG</label>
+      </div>
+      <div class="md-form col-3">
+        <input mdbInput formControlName="orgaoemissor" type="text" id="orgaoEmissor" class="form-control">
+        <label for="orgaoEmissor">Orgão Emissor</label>
+      </div>
+      <div class="md-form col-3">
+        <input mdbInput 
+        [value]="principalForm.get('cpf_cnpj').value | cpf"
+        formControlName="cpf_cnpj" 
+        type="text" id="cpf" 
+        class="form-control">
+        <label for="cpf">CPF</label>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="md-form col-3">
+        <input mdbInput formControlName="cnh" type="text" id="cnh" class="form-control">
+        <label for="cnh">CNH número</label>
+      </div>
+      <div class="md-form col-3" style="margin-top: -10px" >
+        <mdb-date-picker formControlName="cnh_validade" #cnh_validade name="mydate" [options]="myDatePickerOptions"
+        [placeholder]="'Selecione a data'" required id="cnh_validade_">
+      </mdb-date-picker>
+      <label for="cnh_validade_" > CNH Validade</label>
+      </div>
+      <div class="md-form col-3">
+        <input mdbInput formControlName="cnh_categoria" type="text" id="cnh_categoria_" class="form-control">
+        <label for="cnh_categoria_">CNH categoria</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-4 mdb-select-form">
+        <mdb-select [filterEnabled]="true" formControlName="id_atividade" [placeholder]="'Selecione a profissão'"
+          [options]="atividadesPessoaFisica" [multiple]="false"></mdb-select>
+        <label>Profissão</label>
+      </div>
+      <div class="col-4 mdb-select-form">
+        <mdb-select [filterEnabled]="true" formControlName="id_tipo_cliente" [placeholder]="'Selecione o tipo do cliente'"
+          [options]="tiposDeCliente" [multiple]="false"></mdb-select>
+        <label>Tipo do cliente</label>
+      </div>
+      <div class="col-4 mdb-select-form">
+        <mdb-select [filterEnabled]="true" formControlName="id_classificacao_cliente" [placeholder]="'Selecione a classificação do cliente'"
+          [options]="classificacoesDeCliente" [multiple]="false"></mdb-select>
+        <label>Classificação do cliente</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="md-form col">
+          <input mdbInput formControlName="email" type="text" id="email" class="form-control">
+          <label for="email">Email</label>
+      </div>
+      <div class="md-form col">
+        <input mdbInput formControlName="website" type="text" id="website" class="form-control">
+        <label for="website">WebSite</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="md-form col">
+        <textarea type="text" formControlName="observacoes" id="obs" class="md-textarea form-control"
+          mdbInput></textarea>
+        <label for="obs">Observação</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="md-form col">
+        <input mdbInput formControlName="id" type="text" id="id" class="form-control">
+        <label for="id">Id</label>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Pessoa Juridica -->
+  <div *ngIf="tipoPessoaSelecionada == 'J'">
+    <div class="row">
+      <div class="col mdb-select-form">
+        <mdb-select formControlName="tipo" (selected)="getSelectedValuePessoa($event)" [options]="tipoDePessoa"
+          [multiple]="false" placeholder="Tipo de pessoa"></mdb-select>
+        <label>Pessoa</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="md-form col">
+        <input mdbInput formControlName="nome" type="text" id="nome" (blur)="nomeMaiusculo()"
+          class="form-control">
+        <label for="nome">Razaão Social</label>
+      </div>
+    </div>
+    <div class="row">
+      <div class="md-form col">
+        <input mdbInput formControlName="apelido_fantasia" type="text" id="rg" class="form-control">
+        <label for="rg">Nome Fantasia</label>
+      </div>
+    </div>
+    <div class="row">
+      <!-- <div class="md-form form-group col mdb-date-form">
+        <input style="margin-top: 40px"  name="datanascimento" formControlName="datanascimento"   id="datanascimento" type="text" >
+        <label class="">Data Fundação</label>
+      </div> -->
+      <div class="md-form col" style="margin-top: -10px" >
+        <mdb-date-picker formControlName="datanascimento" #datanascimento name="mydate" [options]="myDatePickerOptions"
+          [placeholder]="'Selecione a data'" required id="datanascimento">
+        </mdb-date-picker>
+        <label for="datanascimento"  >Data Fundação</label>
+    </div>
+
+      <div class="md-form col-4">
+        <input mdbInput formControlName="rg_ie" type="text" id="rg_ie" class="form-control">
+        <label for="rg_ie">IE</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="md-form col-5">
+        <input mdbInput 
+            [value]="principalForm.get('cpf_cnpj').value | cnpj"
+            formControlName="cpf_cnpj" 
+            type="text" 
+            id="cpf_cnpj" 
+            class="form-control">
+        <label for="cpf_cnpj">CNPJ</label>
+      </div>
+      <div class="col mdb-select-form">
+        <mdb-select [filterEnabled]="true" formControlName="id_atividade" [placeholder]="'Selecione a atividade'"
+          [options]="atividadesPessoaJuridica" [multiple]="false"></mdb-select>
+        <label>Atividade</label>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="md-form col-6">
+        <input mdbInput formControlName="email" type="text" id="email" class="form-control">
+        <label for="email">Email</label>
+      </div>
+      <div class="md-form col-6">
+        <input mdbInput formControlName="website" type="text" id="website" class="form-control">
+        <label for="website">WebSite</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="md-form col">
+        <textarea type="text" formControlName="observacoes" id="obs" class="md-textarea form-control"
+          mdbInput></textarea>
+        <label for="obs">Observação</label>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="md-form col">
+        <input mdbInput formControlName="id" type="text" id="id" class="form-control" >
+        <label for="id">Id</label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row justify-content-end">
+    <div class="md-form">
+      <button type="button" mdbBtn color="danger" (click)="voltar();" class="relative waves-light" mdbWavesEffect
+        [disabled]="!principalForm.valid && idPessoa">Voltar</button>
+    </div>
+    <div class="md-form">
+      <button type="button" mdbBtn color="primary" (click)="salvarPessoa();" class="relative waves-light" mdbWavesEffect
+        [disabled]="!principalForm.valid && idPessoa">Salvar Pessoa</button>
+    </div>
+    <div *ngIf="notVendas" class="md-form">
+      <button type="button" mdbBtn color="blue" (click)="modalCriarEvento.show()" class="relative waves-light" mdbWavesEffect
+        [disabled]="!principalForm.valid">Atendimento</button>
+    </div>
+    <div *ngIf="notVendas" class="md-form">
+        <button type="button" mdbBtn color="primary" (click)="pessoaProposta_();  modalElaborarProposta.show();" class="relative waves-light" mdbWavesEffect
+          [disabled]="!principalForm.valid">Elaborar Proposta</button>
+    </div>
+ 
+
+  </div>
+
+  <div mdbModal #modalCriarEvento="mdbModal" [config]="{backdrop: true}" class="modal fade right" role="dialog"
+  aria-labelledby="myBasicModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fluid" role="document">
+    <div class="modal-header light-blue darken-3 white-text">
+      <h4 class="modal-title w-100" id="myModalLabel">Criar Evento</h4>
+      <button type="button" style="cursor:pointer;" class="close" data-dismiss="modal" aria-label="Close"
+        (click)="modalCriarEvento.hide()">
+        <span aria-hidden="true" style="color:white; cursor:pointer;">&times;</span>
+      </button>
+    </div>
+    <div class="modal-content">
+      <div class="modal-body" style="overflow: auto; height: 80vh;">
+        <app-criar-evento [atendimento]="pessoa" [disabled]="true" (fechaModal)="fechaModal()" ></app-criar-evento>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div *ngIf="pessoa" mdbModal #modalElaborarProposta="mdbModal"
+[config]="{backdrop: true, ignoreBackdropClick: true}" class="modal fade right" role="dialog"
+aria-labelledby="elaborarProposta" aria-hidden="true">
+<div class="modal-dialog modal-fluid" role="document">
+  <div class="modal-header light-blue darken-3 white-text">
+    <h4 class="modal-title w-100" id="myModalLabel">Elaborando Proposta para - {{pessoa.principal.nome}}</h4>
+    <button type="button" style="cursor:pointer;" class="close" data-dismiss="modal" aria-label="Close"
+    (click)="fechaModalElaborarProposta()">
+    <span aria-hidden="true" style="color:white; cursor:pointer;">&times;</span>
+  </button>
+
+  </div>
+  <div *ngIf="pessoaProposta"  class="modal-content">
+    <div class="modal-body" style="overflow: auto; height: 80vh;">
+      <app-proposta  [abaSelecionada]="abaSelecionada" [pessoa]="pessoa" (returnPessoaSelecionada)="fechaModalElaborarProposta()" ></app-proposta>
+    </div>
+  </div>
+</div>
+</div>
+
+
+</form>

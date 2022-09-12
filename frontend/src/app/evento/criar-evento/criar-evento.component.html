@@ -1,0 +1,73 @@
+<form [formGroup]="criarEventoForm" class="formQuestionario">
+  <div class="row">
+    <div class="col-4">
+      <div class="md-form">
+        <mdb-select formControlName="tipodestino" (selected)="onSelectTipoPessoa($event)" [options]="tipoPessoa"
+          [multiple]="false" placeholder="Para"></mdb-select>
+      </div>
+    </div>
+    <div class="col-8">
+      <div class="md-form">
+        <mdb-select formControlName="pessoaOrgonograma" [options]="optionsTipoDestino" [multiple]="false"
+          placeholder="Destinatário"></mdb-select>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-6">
+      <div class="md-form">
+      <mdb-select formControlName="canal" [options]="canaisSelect"
+          (selected)="onSelectCanal($event)" [multiple]="false" 
+          placeholder="Selecione o canal" id="-canal"></mdb-select>
+          <label for="-canal" style="margin-top: -20px; margin-left: 0px;" >Canal</label>
+    </div>
+  </div>
+    <div class="col-6">
+        <div class="md-form">
+          <mdb-select formControlName="id_motivo" [options]="motivosDoCanalSelecionado"
+            [multiple]="false" placeholder="Selecione o motivo" id="-motivo"></mdb-select>
+            <label for="-motivo" style="margin-top: -20px; margin-left: 0px" >Motivo</label>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="md-form col-4" >
+      <mdb-date-picker formControlName="data"  name="mydate" [options]="myDatePickerOptions"
+        [placeholder]="'Selecione a data'" required [label]="'Agendar para:'" ></mdb-date-picker>
+    </div>
+    <div class="md-form col-4" >
+        <mdb-time-picker formControlName="hora" [buttonLabel]="'Done'" [twelvehour]="false" [darktheme]="true"
+          [placeholder]="'Selecione a hora'" [label]="'Agendar para:'"></mdb-time-picker>
+    </div>
+    <div class="md-form col-4" >
+      <mdb-checkbox  formControlName="encerrado" (change)="defineDestinatario();"  >Cria evento encerrado</mdb-checkbox>
+    </div>
+
+  </div>
+  <div class="row mt-3">
+    <div class="col-12">
+        <app-pesquisa-cliente [disabled]="disabled" [initValueId]="pessoaId"
+          (onSelectCliente)="onSelectCliente($event)">
+        </app-pesquisa-cliente>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="md-form">
+        <textarea type="text" formControlName="observacao" id="form7" class="md-textarea form-control"
+          mdbInput></textarea>
+        <label for="form7" class="ml-0">Observação</label>
+      </div>
+    </div>
+  </div>
+  <div class="row justify-content-end">
+    <div class="md-form">
+      <button type="button" mdbBtn color="danger" (click)="cancelar();" class="relative waves-light"
+        mdbWavesEffect>Cancelar</button>
+    </div>
+    <div class="md-form">
+      <button type="button" mdbBtn color="primary" (click)="criarEvento();" class="relative waves-light" mdbWavesEffect
+        [disabled]="!criarEventoForm.valid" id="bntGravar" >Gravar</button>
+    </div>
+  </div>
+</form>
